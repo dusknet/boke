@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探索未知 | 我的个人空间</title>
+    <style>
+        /* CSS 变量：轻松实现主题切换 */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #2c3e50;
+            --text-muted: #606f7b;
+            --accent-color: #4a90e2;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+            --border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #1a1c20 0%, #0f1013 100%);
+            --card-bg: rgba(30, 33, 40, 0.85);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-color: #6366f1;
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* 基础样式与平滑过渡 */
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* 顶部导航与主题切换按钮 */
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1.5rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .theme-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text-main);
+            font-weight: 500;
+            box-shadow: var(--shadow);
+        }
+
+        /* 个人信息头部（精美头像加渐变） */
+        header {
+            text-align: center;
+            padding: 2rem 1rem 4rem 1rem;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            margin: 0.8rem 0 0;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* 主体布局 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem 4rem 1.5rem;
+        }
+
+        /* 磨砂玻璃质感卡片 (Glassmorphism) */
+        .post-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 悬浮时的微动效 */
+        .post-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        /* 装饰条 */
+        .post-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: var(--accent-color);
+        }
+
+        .post-card h2 {
+            margin: 0 0 0.8rem 0;
+            font-size: 1.6rem;
+            line-height: 1.3;
+        }
+
+        .post-card h2 a {
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .post-card h2 a:hover {
+            color: var(--accent-color);
+        }
+
+        .post-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .post-content {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            opacity: 0.9;
+        }
+
+        /* 页脚与社交链接 */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .social-links {
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 0.5rem;
+            font-weight: 500;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航 -->
+    <nav>
+        <button class="theme-btn" id="themeToggle">🌓 切换模式</button>
+    </nav>
+
+    <!-- 个人名片区 -->
+    <header>
+        <!-- 头像处默认显示文字，你也可以后续换成图片 <img> -->
+        <div class="avatar">Blog</div>
+        <h1>Hi, 我是你的名字 👋</h1>
+        <p>写代码，也写生活。寻找技术与美学的平衡点。</p>
+    </header>
+
+    <!-- 博客文章列表区 -->
+    <div class="container">
+        
+        <!-- 第一篇文章 -->
+        <article class="post-card">
+            <h2><a href="#">我的第一篇升级版博客文章</a></h2>
+            <div class="post-meta">
+                <span>📅 2026-05-31</span>
+                <span>🏷️ 个人随笔</span>
+            </div>
+            <div class="post-content">
+                <p>这是重新设计后的博客界面！引入了现在很流行的毛玻璃（Glassmorphism）设计风格，并且加入了暗黑模式。卡片带有微弱的投影和流畅的悬浮动画，让阅读体验变得更加沉浸和优雅。</p>
+            </div>
+        </article>
+
+        <!-- 第二篇文章 -->
+        <article class="post-card">
+            <h2><a href="#">关于未来博客的进阶规划</a></h2>
+            <div class="post-meta">
+                <span>📅 2026-05-30</span>
+                <span>🏷️ 技术探索</span>
+            </div>
+            <div class="post-content">
+                <p>当这个单页满足不了我的文章数量时，我打算开始研究 Hexo 或者 Hugo 这样的静态网页生成器。把所有的文章都用 Markdown 单独管理，那才是独立博客的终极玩法！</p>
+            </div>
+        </article>
+        
+    </div>
+
+    <!-- 页脚区 -->
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com" target="_blank">GitHub</a> · 
+            <a href="#">知乎</a> · 
+            <a href="#">邮件</a>
+        </div>
+        <p>© 2026 YourName. Powered by GitHub Pages.</p>
+    </footer>
+
+    <!-- 控制暗黑模式的 JavaScript 代码 -->
+    <script>
+        const toggleBtn = document.getElementById('themeToggle');
+        // 检查用户之前是否设置过主题
+        const currentTheme = localStorage.getItem('theme');
+        
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+</body>
+</html>
